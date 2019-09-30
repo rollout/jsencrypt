@@ -1,5 +1,5 @@
-import {b64tohex, hex2b64} from "../lib/jsbn/base64";
-import {JSEncryptRSAKey} from "./JSEncryptRSAKey";
+import {b64tohex} from "../lib/jsbn/base64";
+import { RSAKey } from "../lib/jsbn/rsa";
 
 
 declare var JSENCRYPT_VERSION:string;
@@ -22,17 +22,22 @@ export interface IJSEncryptOptions {
 export default class JSEncrypt {
     constructor(options:IJSEncryptOptions) {
         options = options || {};
+        /* Unnecessary for rox
         this.default_key_size = parseInt(options.default_key_size, 10) || 1024;
         this.default_public_exponent = options.default_public_exponent || "010001"; // 65537 default openssl public exponent for rsa key type
         this.log = options.log || false;
+        */
         // The private and public key.
         this.key = null;
     }
 
+    /* Unnecessary for rox
     private default_key_size:number;
     private default_public_exponent:string;
     private log:boolean;
     private key:JSEncryptRSAKey;
+    */
+   private key:RSAKey;
 
     public static version:string = JSENCRYPT_VERSION;
 
@@ -43,32 +48,38 @@ export default class JSEncrypt {
      * @param {Object|string} key the pem encoded string or an object (with or without header/footer)
      * @public
      */
+    /* Unnecessary for rox
     public setKey(key:string) {
         if (this.log && this.key) {
             console.warn("A key was already set, overriding existing.");
         }
         this.key = new JSEncryptRSAKey(key);
     }
+    */
 
     /**
      * Proxy method for setKey, for api compatibility
      * @see setKey
      * @public
      */
+    /* Unnecessary for rox
     public setPrivateKey(privkey:string) {
         // Create the key.
         this.setKey(privkey);
     }
+    */
 
     /**
      * Proxy method for setKey, for api compatibility
      * @see setKey
      * @public
      */
+    /* Unnecessary for rox
     public setPublicKey(pubkey:string) {
         // Sets the public key.
         this.setKey(pubkey);
     }
+    */
 
     /**
      * Proxy method for RSAKey object's decrypt, decrypt the string using the private
@@ -78,6 +89,7 @@ export default class JSEncrypt {
      * @return {string} the decrypted string
      * @public
      */
+    /* Unnecessary for rox
     public decrypt(str:string) {
         // Return the decrypted string.
         try {
@@ -86,6 +98,7 @@ export default class JSEncrypt {
             return false;
         }
     }
+    */
 
     /**
      * Proxy method for RSAKey object's encrypt, encrypt the string using the public
@@ -95,6 +108,7 @@ export default class JSEncrypt {
      * @return {string} the encrypted string encoded in base64
      * @public
      */
+    /* Unnecessary for rox
     public encrypt(str:string) {
         // Return the encrypted string.
         try {
@@ -103,6 +117,7 @@ export default class JSEncrypt {
             return false;
         }
     }
+    */
 
     /**
      * Proxy method for RSAKey object's sign.
@@ -112,6 +127,7 @@ export default class JSEncrypt {
      * @return {string} the signature encoded in base64
      * @public
      */
+    /* Unnecessary for rox
     public sign(str:string, digestMethod:(str:string) => string, digestName:string):string|false {
         // return the RSA signature of 'str' in 'hex' format.
         try {
@@ -120,6 +136,7 @@ export default class JSEncrypt {
             return false;
         }
     }
+    */
 
     /**
      * Proxy method for RSAKey object's verify.
@@ -150,6 +167,8 @@ export default class JSEncrypt {
         // Only create new if it does not exist.
         if (!this.key) {
             // Get a new private key.
+            this.key = new RSAKey();
+            /* Unnecessary for rox
             this.key = new JSEncryptRSAKey();
             if (cb && {}.toString.call(cb) === "[object Function]") {
                 this.key.generateAsync(this.default_key_size, this.default_public_exponent, cb);
@@ -157,6 +176,7 @@ export default class JSEncrypt {
             }
             // Generate the key.
             this.key.generate(this.default_key_size, this.default_public_exponent);
+            */
         }
         return this.key;
     }
@@ -167,10 +187,12 @@ export default class JSEncrypt {
      * @returns {string} pem encoded representation of the private key WITH header and footer
      * @public
      */
+    /* Unnecessary for rox
     public getPrivateKey() {
         // Return the private representation of this key.
         return this.getKey().getPrivateKey();
     }
+    */
 
     /**
      * Returns the pem encoded representation of the private key
@@ -178,10 +200,12 @@ export default class JSEncrypt {
      * @returns {string} pem encoded representation of the private key WITHOUT header and footer
      * @public
      */
+    /* Unnecessary for rox
     public getPrivateKeyB64() {
         // Return the private representation of this key.
         return this.getKey().getPrivateBaseKeyB64();
     }
+    */
 
 
     /**
@@ -190,10 +214,12 @@ export default class JSEncrypt {
      * @returns {string} pem encoded representation of the public key WITH header and footer
      * @public
      */
+    /* Unnecessary for rox
     public getPublicKey() {
         // Return the private representation of this key.
         return this.getKey().getPublicKey();
     }
+    */
 
     /**
      * Returns the pem encoded representation of the public key
@@ -201,9 +227,11 @@ export default class JSEncrypt {
      * @returns {string} pem encoded representation of the public key WITHOUT header and footer
      * @public
      */
+    /* Unnecessary for rox
     public getPublicKeyB64() {
         // Return the private representation of this key.
         return this.getKey().getPublicBaseKeyB64();
     }
+    */
 }
 

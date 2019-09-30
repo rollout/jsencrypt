@@ -4,7 +4,7 @@
 
 // Basic JavaScript BN library - subset useful for RSA encryption.
 
-import {cbit, int2char, lbit, op_and, op_andnot, op_or, op_xor} from "./util";
+import {cbit, int2char, op_and, op_andnot, op_or, op_xor} from "./util";
 import {SecureRandom} from "./rng";
 // Bits per digit
 let dbits;
@@ -13,19 +13,23 @@ let dbits;
 const canary = 0xdeadbeefcafe;
 const j_lm = ((canary & 0xffffff) == 0xefcafe);
 
-
+/* Unnecessary for rox
 //#region
 const lowprimes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599, 601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997];
 const lplim = (1 << 26) / lowprimes[lowprimes.length - 1];
 //#endregion
+*/
 
 // (public) Constructor
 export class BigInteger {
     constructor(a:number|number[]|string, b?:number|SecureRandom, c?:number|SecureRandom) {
         if (a != null) {
             if ("number" == typeof a) {
+                /* Unnecessary for rox
                 this.fromNumber(a, b, c);
-            } else if (b == null && "string" != typeof a) {
+                */
+            } else
+            if (b == null && "string" != typeof a) {
                 this.fromString(a, 256);
             } else {
                 this.fromString(a, b as number);
@@ -218,6 +222,7 @@ export class BigInteger {
 
     // BigInteger.prototype.toByteArray = bnToByteArray;
     // (public) convert to bigendian byte array
+    /* Unnecessary for rox
     public toByteArray():number[] {
         let i = this.t;
         const r = [];
@@ -253,6 +258,7 @@ export class BigInteger {
         }
         return r;
     }
+    */
 
 
     // BigInteger.prototype.equals = bnEquals;
@@ -298,15 +304,18 @@ export class BigInteger {
 
 
     // BigInteger.prototype.andNot = bnAndNot;
+    /* Unnecessary for rox
     protected andNot(a:BigInteger):BigInteger {
         const r = nbi();
         this.bitwiseTo(a, op_andnot, r);
         return r;
     }
+    */
 
 
     // BigInteger.prototype.not = bnNot;
     // (public) ~this
+    /* Unnecessary for rox
     protected not():BigInteger {
         const r = nbi();
         for (let i = 0; i < this.t; ++i) {
@@ -316,6 +325,7 @@ export class BigInteger {
         r.s = ~this.s;
         return r;
     }
+    */
 
 
     // BigInteger.prototype.shiftLeft = bnShiftLeft;
@@ -333,6 +343,7 @@ export class BigInteger {
 
     // BigInteger.prototype.shiftRight = bnShiftRight;
     // (public) this >> n
+    /* Unnecessary for rox
     protected shiftRight(n:number) {
         const r = nbi();
         if (n < 0) {
@@ -342,10 +353,12 @@ export class BigInteger {
         }
         return r;
     }
+    */
 
 
     // BigInteger.prototype.getLowestSetBit = bnGetLowestSetBit;
     // (public) returns index of lowest 1-bit (or -1 if none)
+    /* Unnecessary for rox
     protected getLowestSetBit() {
         for (let i = 0; i < this.t; ++i) {
             if (this[i] != 0) {
@@ -357,6 +370,7 @@ export class BigInteger {
         }
         return -1;
     }
+    */
 
 
     // BigInteger.prototype.bitCount = bnBitCount;
@@ -405,11 +419,13 @@ export class BigInteger {
 
     // BigInteger.prototype.add = bnAdd;
     // (public) this + a
+    /* Unnecessary for rox
     public add(a:BigInteger) {
         const r = nbi();
         this.addTo(a, r);
         return r;
     }
+    */
 
 
     // BigInteger.prototype.subtract = bnSubtract;
@@ -460,6 +476,7 @@ export class BigInteger {
 
     // BigInteger.prototype.modPow = bnModPow;
     // (public) this^e % m (HAC 14.85)
+    /* Unnecessary for rox
     public modPow(e:BigInteger, m:BigInteger) {
         let i = e.bitLength();
         let k;
@@ -559,10 +576,12 @@ export class BigInteger {
         }
         return z.revert(r);
     }
+    */
 
 
     // BigInteger.prototype.modInverse = bnModInverse;
     // (public) 1/this % m (HAC 14.61)
+    /* Unnecessary for rox
     public modInverse(m:BigInteger) {
         const ac = m.isEven();
         if ((this.isEven() && ac) || m.signum() == 0) {
@@ -630,6 +649,7 @@ export class BigInteger {
             return d;
         }
     }
+    */
 
 
     // BigInteger.prototype.pow = bnPow;
@@ -641,6 +661,7 @@ export class BigInteger {
 
     // BigInteger.prototype.gcd = bnGCD;
     // (public) gcd(this,a) (HAC 14.54)
+    /* Unnecessary for rox
     public gcd(a:BigInteger) {
         let x = (this.s < 0) ? this.negate() : this.clone();
         let y = (a.s < 0) ? a.negate() : a.clone();
@@ -681,10 +702,12 @@ export class BigInteger {
         }
         return y;
     }
+    */
 
 
     // BigInteger.prototype.isProbablePrime = bnIsProbablePrime;
     // (public) test primality with certainty >= 1-.5^t
+    /* Unnecessary for rox
     public isProbablePrime(t:number) {
         let i;
         const x = this.abs();
@@ -715,6 +738,7 @@ export class BigInteger {
         }
         return x.millerRabin(t);
     }
+    */
 
 
   //#endregion PUBLIC
@@ -1192,6 +1216,7 @@ export class BigInteger {
 
     // BigInteger.prototype.fromNumber = bnpFromNumber;
     // (protected) alternate constructor
+    /* Unnecessary for rox
     protected fromNumber(a:number, b:number|SecureRandom, c?:number|SecureRandom) {
         if ("number" == typeof b) {
             // new BigInteger(int,int,RNG)
@@ -1227,6 +1252,7 @@ export class BigInteger {
             this.fromString(x, 256);
         }
     }
+    */
 
 
     // BigInteger.prototype.bitwiseTo = bnpBitwiseTo;
@@ -1267,6 +1293,7 @@ export class BigInteger {
 
     // BigInteger.prototype.addTo = bnpAddTo;
     // (protected) r = this + a
+    /* Unnecessary for rox
     protected addTo(a:BigInteger, r:BigInteger) {
         let i = 0;
         let c = 0;
@@ -1302,6 +1329,7 @@ export class BigInteger {
         r.t = i;
         r.clamp();
     }
+    */
 
 
     // BigInteger.prototype.dMultiply = bnpDMultiply;
@@ -1373,6 +1401,7 @@ export class BigInteger {
 
     // BigInteger.prototype.modInt = bnpModInt;
     // (protected) this % n, n < 2^26
+    /* Unnecessary for rox
     protected modInt(n:number) {
         if (n <= 0) {
             return 0;
@@ -1390,10 +1419,12 @@ export class BigInteger {
         }
         return r;
     }
+    */
 
 
     // BigInteger.prototype.millerRabin = bnpMillerRabin;
     // (protected) true if probably prime (HAC 4.24, Miller-Rabin)
+    /* Unnecessary for rox
     protected millerRabin(t:number) {
         const n1 = this.subtract(BigInteger.ONE);
         const k = n1.getLowestSetBit();
@@ -1425,6 +1456,7 @@ export class BigInteger {
         }
         return true;
     }
+    */
 
     // BigInteger.prototype.square = bnSquare;
     // (public) this^2
@@ -1437,6 +1469,7 @@ export class BigInteger {
     //#region ASYNC
 
     // Public API method
+    /* Unnecessary for rox
     public gcda(a:BigInteger, callback:(x:BigInteger) => void) {
         let x = (this.s < 0) ? this.negate() : this.clone();
         let y = (a.s < 0) ? a.negate() : a.clone();
@@ -1476,8 +1509,10 @@ export class BigInteger {
         };
         setTimeout(gcda1, 10);
     }
+    */
 
     // (protected) alternate constructor
+    /* Unnecessary for rox
     public fromNumberAsync(a:number, b:number|SecureRandom, c:number|SecureRandom, callback:() => void) {
         if ("number" == typeof b) {
             if (a < 2) {
@@ -1511,6 +1546,7 @@ export class BigInteger {
             this.fromString(x, 256);
         }
     }
+    */
 
     //#endregion ASYNC
 
@@ -1721,6 +1757,7 @@ class Montgomery implements IReduction {
 
 //#region Barrett
 
+/* Unnecessary for rox
 // Barrett modular reduction
 class Barrett implements IReduction {
     constructor(protected m:BigInteger) {
@@ -1789,6 +1826,7 @@ class Barrett implements IReduction {
         this.reduce(r);
     }
 }
+*/
 
 //#endregion
 

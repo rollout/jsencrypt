@@ -4,8 +4,7 @@
 
 // convert a (hex) string to a bignum object
 
-import {BigInteger, nbi, parseBigInt} from "./jsbn";
-import {SecureRandom} from "./rng";
+import {BigInteger, parseBigInt} from "./jsbn";
 
 
 // function linebrk(s,n) {
@@ -25,6 +24,7 @@ import {SecureRandom} from "./rng";
 //     return b.toString(16);
 // }
 
+/* Unnecessary for rox
 function pkcs1pad1(s:string, n:number) {
     if (n < s.length + 22) {
         console.error("Message too long for RSA");
@@ -75,6 +75,7 @@ function pkcs1pad2(s:string, n:number) {
     ba[--n] = 0;
     return new BigInteger(ba);
 }
+*/
 
 // "empty" RSA key constructor
 export class RSAKey {
@@ -98,6 +99,7 @@ export class RSAKey {
     }
 
 
+    /* Unnecessary for rox
     // RSAKey.prototype.doPrivate = RSADoPrivate;
     // Perform raw private operation on "x": return x^d (mod n)
     public doPrivate(x:BigInteger) {
@@ -114,6 +116,7 @@ export class RSAKey {
         }
         return xp.subtract(xq).multiply(this.coeff).mod(this.p).multiply(this.q).add(xq);
     }
+    */
 
     //#endregion PROTECTED
 
@@ -131,6 +134,7 @@ export class RSAKey {
     }
 
 
+    /* Unnecessary for rox
     // RSAKey.prototype.encrypt = RSAEncrypt;
     // Return the PKCS#1 RSA encryption of "text" as an even-length hex string
     public encrypt(text:string) {
@@ -181,10 +185,12 @@ export class RSAKey {
             console.error("Invalid RSA private key");
         }
     }
+    */
 
 
     // RSAKey.prototype.generate = RSAGenerate;
     // Generate a new random private key B bits long, using public expt E
+    /* Unnecessary for rox
     public generate(B:number, E:string) {
         const rng = new SecureRandom();
         const qs = B >> 1;
@@ -217,7 +223,9 @@ export class RSAKey {
             }
         }
     }
+    */
 
+    /* Unnecessary for rox
     // RSAKey.prototype.decrypt = RSADecrypt;
     // Return the PKCS#1 RSA decryption of "ctext".
     // "ctext" is an even-length hex string and the output is a plain string.
@@ -305,6 +313,7 @@ export class RSAKey {
             return "0" + h;
         }
     }
+    */
 
     public verify(text:string, signature:string, digestMethod:(str:string) => string):boolean {
         const c = parseBigInt(signature, 16);
@@ -330,7 +339,7 @@ export class RSAKey {
 
 }
 
-
+/* Unnecessary for rox
 // Undo PKCS#1 (type 2, random) padding and, if valid, return the plaintext
 function pkcs1unpad2(d:BigInteger, n:number):string {
     const b = d.toByteArray();
@@ -358,6 +367,7 @@ function pkcs1unpad2(d:BigInteger, n:number):string {
     }
     return ret;
 }
+*/
 
 // https://tools.ietf.org/html/rfc3447#page-43
 const DIGEST_HEADERS:{ [name:string]:string } = {
@@ -371,9 +381,11 @@ const DIGEST_HEADERS:{ [name:string]:string } = {
     ripemd160: "3021300906052b2403020105000414",
 };
 
+/* Unnecessary for rox
 function getDigestHeader(name:string):string {
     return DIGEST_HEADERS[name] || "";
 }
+*/
 
 function removeDigestHeader(str:string):string {
     for (const name in DIGEST_HEADERS) {

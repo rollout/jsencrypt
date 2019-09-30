@@ -68,6 +68,7 @@ export const Base64 = {
         }
         return out;
     },
+    /* Unnecessary for rox
     re: /-----BEGIN [^-]+-----([A-Za-z0-9+\/=\s]+)-----END [^-]+-----|begin-base64[^\n]+\n([A-Za-z0-9+\/=\s]+)====/,
     unarmor(a:string):number[] {
         const m = Base64.re.exec(a);
@@ -82,4 +83,5 @@ export const Base64 = {
         }
         return Base64.decode(a);
     }
+    */
 };
